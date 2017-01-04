@@ -67,7 +67,7 @@ public class Ventana {
 		frame.getContentPane().add(nombreFuncion);
 		nombreFuncion.setColumns(10);
 
-		//VARIABLES PEQUEÑAS
+		//VARIABLES PEQUEï¿½AS
 
 		JComboBox<String> variable1 = new JComboBox<String>();
 		variable1.setBounds(58, 237, 70, 25);
@@ -113,7 +113,7 @@ public class Ventana {
 		crearFuncionBoton.setBounds(229, 312, 97, 47);
 		frame.getContentPane().add(crearFuncionBoton);
 		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{nombreFuncion, funcion1CB, funcion2CB, crearFuncionBoton}));
-		//AÑADIR OPCIONES COMBO BOX PEQUEÑOS
+		//Aï¿½ADIR OPCIONES COMBO BOX PEQUEï¿½OS
 		variable1.addItem("");
 		variable1.addItem("A");
 		variable1.addItem("B");
