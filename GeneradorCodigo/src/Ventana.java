@@ -4,14 +4,9 @@ import javax.swing.JFrame;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
@@ -22,8 +17,6 @@ public class Ventana {
 
 	private JFrame frame;
 	private JTextField nombreFuncion;
-	
-	private static String nombre, accion1, accion2, p1, p2MASk2, p3, p4;
 
 	/**
 	 * Launch the application.
@@ -52,16 +45,20 @@ public class Ventana {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		//FRAME
+		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 599, 419);
+		frame.setBounds(50, 50, 600, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JComboBox funcion1CB = new JComboBox();
+		//VARIABLES GRANDES
+		
+		JComboBox<String> funcion1CB = new JComboBox<String>();
 		funcion1CB.setBounds(58, 169, 172, 22);
 		frame.getContentPane().add(funcion1CB);
 
-		JComboBox funcion2CB = new JComboBox();
+		JComboBox<String> funcion2CB = new JComboBox<String>();
 		funcion2CB.setBounds(324, 169, 172, 22);
 		frame.getContentPane().add(funcion2CB);
 
@@ -69,6 +66,26 @@ public class Ventana {
 		nombreFuncion.setBounds(58, 106, 438, 22);
 		frame.getContentPane().add(nombreFuncion);
 		nombreFuncion.setColumns(10);
+
+		//VARIABLES PEQUEÑAS
+
+		JComboBox<String> variable1 = new JComboBox<String>();
+		variable1.setBounds(58, 237, 70, 25);
+		frame.getContentPane().add(variable1);
+
+		JComboBox<String> variable2 = new JComboBox<String>();
+		variable2.setBounds(160, 238, 70, 25);
+		frame.getContentPane().add(variable2);
+
+		JComboBox<String> variable3 = new JComboBox<String>();
+		variable3.setBounds(324, 238, 70, 25);
+		frame.getContentPane().add(variable3);
+
+		JComboBox<String> variable4 = new JComboBox<String>();
+		variable4.setBounds(426, 238, 70, 25);
+		frame.getContentPane().add(variable4);
+		
+		//BOTON
 
 		JButton crearFuncionBoton = new JButton("Crear");
 		crearFuncionBoton.addKeyListener(new KeyAdapter() {
@@ -81,39 +98,22 @@ public class Ventana {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				System.out.println("Hago algo en mi vida.");
-				nombre = nombreFuncion.getText();
-				//accion1 = funcion1CB.
-				//accion2 = 
-				//p1
-				//p2MASk2
-				//p3
-				//p4
-				crearFuncion();
+				String nombre = nombreFuncion.getText();
+				String accion1 = funcion1CB.getSelectedItem().toString();
+				String accion2 = funcion2CB.getSelectedItem().toString();
+				String p1 = variable1.getSelectedItem().toString();
+				String p2 = variable2.getSelectedItem().toString();
+				String p3 = variable3.getSelectedItem().toString();
+				String p4 = variable4.getSelectedItem().toString();
+				System.out.println("Los valores introducidos son:\n\t"+nombre+", "+accion1+", "+accion2+", "+p1+", "+p2+", "+p3+", "+p4);
+				Generar.crearFuncion(nombre,accion1,accion2,p1,p2,p3,p4);
 			}
 		});
 		
 		crearFuncionBoton.setBounds(229, 312, 97, 47);
 		frame.getContentPane().add(crearFuncionBoton);
-
-		JComboBox variable1 = new JComboBox();
-		variable1.setBounds(58, 237, 70, 25);
-		frame.getContentPane().add(variable1);
-
-		JComboBox variable2 = new JComboBox();
-		variable2.setBounds(160, 238, 70, 25);
-		frame.getContentPane().add(variable2);
-
-		JComboBox variable3 = new JComboBox();
-		variable3.setBounds(324, 238, 70, 25);
-		frame.getContentPane().add(variable3);
-
-		JComboBox variable4 = new JComboBox();
-		variable4.setBounds(426, 238, 70, 25);
-		frame.getContentPane().add(variable4);
 		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{nombreFuncion, funcion1CB, funcion2CB, crearFuncionBoton}));
-
-		/*	AÃ‘ADIR OPCIONES COMBO BOX PEQUEÃ‘OS	*/
-
+		//AÑADIR OPCIONES COMBO BOX PEQUEÑOS
 		variable1.addItem("");
 		variable1.addItem("A");
 		variable1.addItem("B");
@@ -149,7 +149,7 @@ public class Ventana {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void actualizarComboBox (JComboBox funcion1CB, JComboBox funcion2CB) {
-		File f = new File("./Funciones");
+		File f = new File("./GeneradorCodigo/Funciones");
 
 		String[] ficheros = f.list();
 
@@ -163,28 +163,6 @@ public class Ventana {
 		}
 		
 		frame.repaint();
-	}
-	
-	
-	private void crearFuncion () {
-		String dir = "./Funciones/" + nombre + ".py";
-		File f = new File(dir);
-		
-		BufferedWriter bw;
-		if (f.exists())
-			System.out.println("ESA FUNCIÃ“N YA EXISTE, JODER");
-		else {
-			try {
-				bw = new BufferedWriter(new FileWriter(f));
-			} catch (IOException e) {
-				System.out.println("SE FUE TODO A LA PUTA :(");
-				System.exit(0);
-			}
-		}
-		//hay que meter los includes
-		//bw.write("print()");
-		
-		
 	}
 	
 	
