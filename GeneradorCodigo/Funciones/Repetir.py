@@ -1,4 +1,4 @@
-//Función Repetir
+#Funcion Repetir
 
 
 print("Introducir el valor para A:")

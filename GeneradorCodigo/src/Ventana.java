@@ -27,6 +27,7 @@ public class Ventana {
 				try {
 					Ventana window = new Ventana();
 					window.frame.setVisible(true);
+					window.frame.setResizable(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -49,9 +50,10 @@ public class Ventana {
 		
 		frame = new JFrame();
 		frame.setBounds(50, 50, 600, 450);
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		
 		//VARIABLES GRANDES
 		
 		JComboBox<String> funcion1CB = new JComboBox<String>();

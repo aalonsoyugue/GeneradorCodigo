@@ -14,7 +14,43 @@ public class Generar {
 		else {
 			try {
 				bw = new BufferedWriter(new FileWriter(f));
-				bw.write("print(HEEYYY)");
+				//importar resto de funciones
+				bw.write("from ./ import *\n\n\n");
+				//empezar a crear funcion
+				bw.write("def "+ nombre + "(A, B):\n");
+				if(accion1.equals("Repetir")){
+					bw.write("\taux = 0\n");
+					bw.write("\tfor i in range("+p3+"):\n");
+					if(!accion2.equals("")&&!p3.equals("")&&!p4.equals("")){
+						bw.write("\t\taux="+accion2+"(aux,"+p4+")\n");
+					}
+					bw.write("\treturn aux\n\n\n");
+				}
+				//inicio nueva funcion
+				bw.write("print(\"Introducir el valor para A:\")\n");
+				bw.write("A = input()\n");
+				bw.write("print(\"Introducir el valor para B:\")\n");
+				bw.write("B = input()\n");
+				//llamada a funcion interna
+				bw.write("C = "+nombre+"(int(A), int(B))\n");
+				//imprimir resultado
+				bw.write("print(\"El resultado es: \", C)\n");
+				
+				
+				
+				/*
+				if(!p1.equals("")&&p2.equals("")){
+					bw.write("C = "+ accion1 + "(" + p1 + ")");
+				}
+				if(p1.equals("")&&p2.equals("")){
+					
+				}
+				else if(p1.equals("")&&p2.equals("")){
+					bw.close();
+					throw new IOException();
+				}
+				*/
+				bw.close();
 			} catch (IOException e) {
 				System.out.println("SE FUE TODO A LA PUTA :(");
 				System.exit(0);
