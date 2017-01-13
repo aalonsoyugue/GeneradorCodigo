@@ -10,17 +10,44 @@ public class Generar {
 		File f = new File(dir);
 		BufferedWriter bw;
 		if (f.exists())
-			System.out.println("ESA FUNCIÓN YA EXISTE, JODER");
+			System.out.println("ESA FUNCIÓN YA EXISTE");
 		else {
 			try {
 				bw = new BufferedWriter(new FileWriter(f));
-				//importar resto de funciones
+				//importar resto de funciones 
+				bw.write("#include <stdio.h>\n");
+				bw.write("#include <stdlib.h>\n");
+				File f2 = new File("./GeneradorCodigo/Funciones");
+				String[] ficheros = f2.list();
+				for (int i = 0; i < ficheros.length; i++){
+					bw.write("#include <"+ ficheros[i] +">\n");
+				}
+				bw.write("\n\n\nint main(int argc, char *argv[]){\n");
+				bw.write("printf(\"Introducir el valor para A:\");\n");
+				bw.write("int A,B;");
+				bw.write("scanf(\"%d\", A);\n");
+				bw.write("print(\"Introducir el valor para B:\");\n");
+				bw.write("scanf(\"%d\", B);\n");
+				//llamada a funcion interna
+				bw.write("C = "+nombre+"(A, B);\n");
+				//imprimir resultado
+				bw.write("print(\"El resultado es: %d\", C);\n");
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				/*//importar resto de funciones
 				bw.write("from ./ import *\n\n\n");
 				//empezar a crear funcion
 				bw.write("def "+ nombre + "(A, B):\n");
 				if(accion1.equals("Repetir")){
 					bw.write("\taux = 0\n");
-					bw.write("\tfor i in range("+p3+"):\n");
+					bw.write("\tfor i in range("+p1+"):\n");
 					if(!accion2.equals("")&&!p3.equals("")&&!p4.equals("")){
 						bw.write("\t\taux="+accion2+"(aux,"+p4+")\n");
 					}
@@ -34,22 +61,9 @@ public class Generar {
 				//llamada a funcion interna
 				bw.write("C = "+nombre+"(int(A), int(B))\n");
 				//imprimir resultado
-				bw.write("print(\"El resultado es: \", C)\n");
+				bw.write("print(\"El resultado es: \", C)\n");*/
 				
 				
-				
-				/*
-				if(!p1.equals("")&&p2.equals("")){
-					bw.write("C = "+ accion1 + "(" + p1 + ")");
-				}
-				if(p1.equals("")&&p2.equals("")){
-					
-				}
-				else if(p1.equals("")&&p2.equals("")){
-					bw.close();
-					throw new IOException();
-				}
-				*/
 				bw.close();
 			} catch (IOException e) {
 				System.out.println("SE FUE TODO A LA PUTA :(");
