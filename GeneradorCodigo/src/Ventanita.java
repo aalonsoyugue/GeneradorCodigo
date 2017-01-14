@@ -10,13 +10,13 @@ import java.io.File;
 
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class Ventanita {
 
 	private JFrame frame;
 	private JTextField nombreFuncion;
+	private JComboBox<String> funcion1CB;
+	private JComboBox<String> funcion2CB;
 
 	/**
 	 * Launch the application.
@@ -46,8 +46,7 @@ public class Ventanita {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		//FRAME
-		
+		//FRAME	
 		frame = new JFrame();
 		frame.setBounds(50, 50, 600, 450);
 		
@@ -55,12 +54,11 @@ public class Ventanita {
 		frame.getContentPane().setLayout(null);
 		
 		//VARIABLES GRANDES
-		
-		JComboBox<String> funcion1CB = new JComboBox<String>();
+		funcion1CB = new JComboBox<String>();
 		funcion1CB.setBounds(58, 169, 172, 22);
 		frame.getContentPane().add(funcion1CB);
 
-		JComboBox<String> funcion2CB = new JComboBox<String>();
+		funcion2CB = new JComboBox<String>();
 		funcion2CB.setBounds(324, 169, 172, 22);
 		frame.getContentPane().add(funcion2CB);
 
@@ -70,7 +68,6 @@ public class Ventanita {
 		nombreFuncion.setColumns(10);
 
 		//VARIABLES PEQUE�AS
-
 		JComboBox<String> variable1 = new JComboBox<String>();
 		variable1.setBounds(58, 237, 70, 25);
 		frame.getContentPane().add(variable1);
@@ -88,14 +85,7 @@ public class Ventanita {
 		frame.getContentPane().add(variable4);
 		
 		//BOTON
-
 		JButton crearFuncionBoton = new JButton("Crear");
-		crearFuncionBoton.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				System.out.println("Hago algo en mi vida.");
-			}
-		});
 		crearFuncionBoton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -108,61 +98,30 @@ public class Ventanita {
 				String p4 = variable4.getSelectedItem().toString();
 				System.out.println("Los valores introducidos son:\n\t"+nombre+", "+accion1+", "+accion2+", "+p1+", "+p2+", "+p3+", "+p4);
 				Generar.crearFuncion(nombre,accion1,accion2,p1,p2,p3,p4);
-				actualizarComboBox(funcion1CB, funcion2CB);
+				actualizarComboBox();
 			}
 		});
 		
 		crearFuncionBoton.setBounds(229, 312, 97, 47);
 		frame.getContentPane().add(crearFuncionBoton);
 		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{nombreFuncion, funcion1CB, funcion2CB, crearFuncionBoton}));
+		
 		//A�ADIR OPCIONES COMBO BOX PEQUE�OS
-		variable1.addItem("");
-		variable1.addItem("A");
-		variable1.addItem("B");
-		variable1.addItem("-A");
-		variable1.addItem("-B");
-		variable1.addItem("A>B");
-		variable1.addItem("A<B");
-
-		variable2.addItem("");
-		variable2.addItem("A");
-		variable2.addItem("B");
-		variable1.addItem("-A");
-		variable1.addItem("-B");
-		variable2.addItem("A>B");
-		variable2.addItem("A<B");
-
-		variable3.addItem("");
-		variable3.addItem("A");
-		variable3.addItem("B");
-		variable1.addItem("-A");
-		variable1.addItem("-B");
-		variable3.addItem("A>B");
-		variable3.addItem("A<B");
-
-		variable4.addItem("");
-		variable4.addItem("A");
-		variable4.addItem("B");
-		variable1.addItem("-A");
-		variable1.addItem("-B");
-		variable4.addItem("A>B");
-		variable4.addItem("A<B");
-
+		String[] combobox = {"", "A", "B", "-A", "-B", "A<B", "A>B"};
+		for(int i=0; i<combobox.length;i++){
+			variable1.addItem(combobox[i]);
+			variable2.addItem(combobox[i]);
+			variable3.addItem(combobox[i]);
+			variable4.addItem(combobox[i]);
+		}
 
 		/*	AÑADIR OPCIONES COMBO BOX GRANDES	*/
-
-		actualizarComboBox(funcion1CB, funcion2CB);
-		
-		
+		actualizarComboBox();	
 	}
 
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private void actualizarComboBox (JComboBox funcion1CB, JComboBox funcion2CB) {
+	private void actualizarComboBox () {
 		File f = new File("./Func");
-
 		String[] ficheros = f.list();
-
 		if (ficheros == null)
 			System.out.println("NO HAY, VETE A LA MIERDA :D");
 		else {
@@ -175,7 +134,6 @@ public class Ventanita {
 				funcion2CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 2));
 			}
 		}
-		
 		frame.repaint();
 	}
 	
