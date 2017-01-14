@@ -99,7 +99,6 @@ public class Ventanita {
 		crearFuncionBoton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				System.out.println("Hago algo en mi vida.");
 				String nombre = nombreFuncion.getText();
 				String accion1 = funcion1CB.getSelectedItem().toString();
 				String accion2 = funcion2CB.getSelectedItem().toString();
@@ -120,24 +119,32 @@ public class Ventanita {
 		variable1.addItem("");
 		variable1.addItem("A");
 		variable1.addItem("B");
+		variable1.addItem("-A");
+		variable1.addItem("-B");
 		variable1.addItem("A>B");
 		variable1.addItem("A<B");
 
 		variable2.addItem("");
 		variable2.addItem("A");
 		variable2.addItem("B");
+		variable1.addItem("-A");
+		variable1.addItem("-B");
 		variable2.addItem("A>B");
 		variable2.addItem("A<B");
 
 		variable3.addItem("");
 		variable3.addItem("A");
 		variable3.addItem("B");
+		variable1.addItem("-A");
+		variable1.addItem("-B");
 		variable3.addItem("A>B");
 		variable3.addItem("A<B");
 
 		variable4.addItem("");
 		variable4.addItem("A");
 		variable4.addItem("B");
+		variable1.addItem("-A");
+		variable1.addItem("-B");
 		variable4.addItem("A>B");
 		variable4.addItem("A<B");
 
@@ -152,16 +159,20 @@ public class Ventanita {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void actualizarComboBox (JComboBox funcion1CB, JComboBox funcion2CB) {
-		File f = new File("./GeneradorCodigo/Funciones");
+		File f = new File("./Func");
 
 		String[] ficheros = f.list();
 
 		if (ficheros == null)
 			System.out.println("NO HAY, VETE A LA MIERDA :D");
 		else {
+			funcion1CB.removeAllItems();
+			funcion2CB.removeAllItems();
+			funcion1CB.addItem("");
+			funcion2CB.addItem("");
 			for (int i = 0; i < ficheros.length; i++){
-				funcion1CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 3));
-				funcion2CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 3));
+				funcion1CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 2));
+				funcion2CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 2));
 			}
 		}
 		
