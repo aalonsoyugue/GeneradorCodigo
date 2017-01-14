@@ -1,5 +1,4 @@
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -7,7 +6,6 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
 
@@ -130,8 +128,10 @@ public class Ventanita {
 			funcion1CB.addItem("");
 			funcion2CB.addItem("");
 			for (int i = 0; i < ficheros.length; i++){
-				funcion1CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 2));
-				funcion2CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 2));
+				if (ficheros[i].charAt(ficheros[i].length() - 1) == 'h'){
+					funcion1CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 2));
+					funcion2CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 2));
+				}
 			}
 		}
 		frame.repaint();
