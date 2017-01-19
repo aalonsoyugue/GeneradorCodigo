@@ -19,12 +19,14 @@ public class Generar {
 				//importar resto de funciones 
 				bwh.write("#include <stdio.h>\n");
 				bwh.write("#include <stdlib.h>\n");
-				File f2 = new File("./Func");
-				String[] ficheros = f2.list();
-				for (int i = 0; i < ficheros.length; i++){
-					if (ficheros[i].charAt(ficheros[i].length() - 1) == 'h')
-						if (!ficheros[i].equals(nombre + ".h"))
-							bwh.write("#include \""+ ficheros[i] +"\"\n");
+				if(accion1.equals("Suma")||accion1.equals("Repetir")&&accion2.equals("Suma")||accion2.equals("Repetir")){
+					bwh.write("#include \"Suma.h\"\n");
+				}
+				if(!accion1.equals("Suma")&&!accion1.equals("Repetir")&&!accion1.equals("")){
+					bwh.write("#include \""+accion1+".h\"\n");
+				}
+				if(!accion2.equals("Suma")&&!accion2.equals("Repetir")&&!accion2.equals("")){
+					bwh.write("#include \""+accion2+".h\"\n");
 				}
 
 				//Declarar funcion
@@ -38,8 +40,14 @@ public class Generar {
 					if(!accion2.equals("")){
 						if(p1.equals("A")||p1.equals("B")||p1.equals("-A")||p1.equals("-B")){
 							//auxiliares
-							bwh.write("\tint aux = " + p1+";\n");
-							bwh.write("\tint auxfin = 0;\n");
+							bwh.write("\tint aux = " + p1+"-1;\n");
+							bwh.write("\t\tint auxfin = " + p4 + ";\n");
+//							bwh.write("\tif(repetirNumero(aux)==0){\n");
+//							bwh.write("\t\tauxfin ="+accion2+ "("+p3+",auxfin);\n");
+//							bwh.write("\t}\n");
+//							bwh.write("\telse{\n");
+//							bwh.write("\t\treturn 0;\n");						
+//							bwh.write("\t}\n");
 							//variables negativas
 							if(p1.equals("-A")){
 								bwh.write("\tA = A * (-1);\n");
@@ -57,14 +65,22 @@ public class Generar {
 							bwh.write("\treturn auxfin;\n");
 							bwh.write("}\n");
 						}
-						if(p1.equals("A<B")||p1.equals("A>B")){
-							bwh.write("\tint aux = " + p3+"\n");
-							bwh.write("\tint auxfin = 0;\n");
-							bwh.write("\twhile(repetirNumero(aux,"+p4+","+p1.substring(1, 2)+")==0){\n");
-							bwh.write("\t\taux-=1;\n");
-							bwh.write("\t\t"+accion2+ "("+p3+","+p4+");\n");
+						if(p1.equals("A<=B")){
+							bwh.write("\tA = A + 1;\n");
+							p1="A=B";
+						}
+						if(p1.equals("A>=B")){
+							bwh.write("\tA = A - 1;\n");
+							p1="A=B";
+						}
+						if(p1.equals("A<B")||p1.equals("A>B")||p1.equals("A=B")){
+							bwh.write("\tint aux = " + p3+";\n");
+//							bwh.write("\tint auxfin = 0;\n");
+							bwh.write("\twhile(repetirCondicion(aux,"+p4+","+"'" + p1.substring(1, 2) + "') == 1){\n");
+//							bwh.write("\t\taux-=1;\n");
+							bwh.write("\t\taux = "+accion2+ "(aux,"+p4+");\n");
 							bwh.write("\t}\n");
-							bwh.write("\treturn auxfin;\n");
+							bwh.write("\treturn aux;\n");
 							bwh.write("}\n");
 						}
 					}
@@ -88,9 +104,15 @@ public class Generar {
 						bwh.write("\tB = B * (-1);\n");
 						p2=p2.substring(1, 2);
 					}
-					bwh.write("\tauxfin="+accion1+ "("+p1+","+p2+");\n");
-					if(!accion2.equals("")){
-						bwh.write("\tauxfin+="+accion1+ "("+p3+","+p4+");\n");	
+					if (!accion2.equals("")&&p2.equals("")){
+						bwh.write("\tauxfin="+accion1+ "(" + p1 + "," + accion2 + "(" + p3 + ", " + p4 + ")" + ");\n");
+					} else if (!accion2.equals("")&&p1.equals("")){
+						bwh.write("\tauxfin="+accion1+ "(" + accion2 + "(" + p3 + ", " + p4 + "), " + p2+ ");\n");
+					} else {		
+						bwh.write("\tauxfin="+accion1+ "("+p1+","+p2+");\n");
+						if(!accion2.equals("")){
+							bwh.write("\tauxfin+="+accion1+ "("+p3+","+p4+");\n");	
+						}
 					}
 					bwh.write("\treturn auxfin;\n");
 					bwh.write("}");
@@ -131,11 +153,12 @@ public class Generar {
 				bwc.write("\tC = "+nombre+"(A, B);\n");
 				//imprimir resultado
 				bwc.write("\tprintf(\"El resultado es: %d\", C);\n");
+				bwc.write("printf(\"\\n\");");
 				bwc.write("}");
 
 				bwc.close();
 			} catch (IOException e) {
-				System.out.println("SE FUE TODO A LA PUTA :(");
+				System.out.println("No funciona :(");
 				System.exit(0);
 			}
 		}

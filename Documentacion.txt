@@ -1,0 +1,27 @@
+
+Miembros del grupo:
+	
+	Adriana Alonso Yugueros (HEIL HITLER)
+	Álvaro Losada de Castro (PSOE)
+	Pablo Ángel Álvarez Fernández (PP)
+	Ramón Manuel Redondo Rodríguez (Ciudadanos)
+
+
+Informe técnico
+
+	El programa consta de dos clases:
+	
+	La primera clase se encarga de definir la interfaz de usuario. Esta clase recoge los datos para crear las funciones,
+	y se los pasa por parámetro a la segunda clase.
+
+	La segunda clase se encarga de generar el código (en lenguaje C), a partir de los parámetros pasados anteriormente.
+
+Descripción de las clases
+
+	Ventana.java: Clase encargada de interactuar con el usuario de la aplicación. Consta de comboBox para elegir las 
+	funciones o los parámetros y un area de texto para escribir el nombre de la nueva función. Una vez que se introducen 
+	todos los parametros y se pulsa el boton general pasa a actuar la otra clase.	
+
+	Generar.java: Clase encargada de escribir el código en los ficheros. Se van ha generar un fichero .c y un fichero .h,
+	uno por función, a partir de los parámetros que le ha pasado la clase Ventana.
+	El código encargado de generar el fichro .c esta dentro del método crearFuncion 

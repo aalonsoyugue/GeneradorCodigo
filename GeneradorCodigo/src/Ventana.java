@@ -8,8 +8,9 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.Component;
+import javax.swing.JLabel;
 
-public class Ventanita {
+public class Ventana {
 
 	private JFrame frame;
 	private JTextField nombreFuncion;
@@ -23,7 +24,7 @@ public class Ventanita {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Ventanita window = new Ventanita();
+					Ventana window = new Ventana();
 					window.frame.setVisible(true);
 					window.frame.setResizable(true);
 				} catch (Exception e) {
@@ -36,7 +37,7 @@ public class Ventanita {
 	/**
 	 * Create the application.
 	 */
-	public Ventanita() {
+	public Ventana() {
 		initialize();
 	}
 
@@ -44,14 +45,14 @@ public class Ventanita {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		//FRAME	
+		// FRAME
 		frame = new JFrame();
 		frame.setBounds(50, 50, 600, 450);
-		
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		//VARIABLES GRANDES
+
+		// VARIABLES GRANDES
 		funcion1CB = new JComboBox<String>();
 		funcion1CB.setBounds(58, 169, 172, 22);
 		frame.getContentPane().add(funcion1CB);
@@ -65,7 +66,7 @@ public class Ventanita {
 		frame.getContentPane().add(nombreFuncion);
 		nombreFuncion.setColumns(10);
 
-		//VARIABLES PEQUE�AS
+		// VARIABLES PEQUE�AS
 		JComboBox<String> variable1 = new JComboBox<String>();
 		variable1.setBounds(58, 237, 70, 25);
 		frame.getContentPane().add(variable1);
@@ -81,8 +82,8 @@ public class Ventanita {
 		JComboBox<String> variable4 = new JComboBox<String>();
 		variable4.setBounds(426, 238, 70, 25);
 		frame.getContentPane().add(variable4);
-		
-		//BOTON
+
+		// BOTON
 		JButton crearFuncionBoton = new JButton("Crear");
 		crearFuncionBoton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -94,30 +95,57 @@ public class Ventanita {
 				String p2 = variable2.getSelectedItem().toString();
 				String p3 = variable3.getSelectedItem().toString();
 				String p4 = variable4.getSelectedItem().toString();
-				System.out.println("Los valores introducidos son:\n\t"+nombre+", "+accion1+", "+accion2+", "+p1+", "+p2+", "+p3+", "+p4);
-				Generar.crearFuncion(nombre,accion1,accion2,p1,p2,p3,p4);
+				System.out.println("Los valores introducidos son:\n\t" + nombre + ", " + accion1 + ", " + accion2 + ", "
+						+ p1 + ", " + p2 + ", " + p3 + ", " + p4);
+				Generar.crearFuncion(nombre, accion1, accion2, p1, p2, p3, p4);
 				actualizarComboBox();
 			}
 		});
-		
+
 		crearFuncionBoton.setBounds(229, 312, 97, 47);
 		frame.getContentPane().add(crearFuncionBoton);
-		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{nombreFuncion, funcion1CB, funcion2CB, crearFuncionBoton}));
-		
-		//A�ADIR OPCIONES COMBO BOX PEQUE�OS
-		String[] combobox = {"", "A", "B", "-A", "-B", "A<B", "A>B"};
-		for(int i=0; i<combobox.length;i++){
+
+		JLabel lblNombreDeLa = new JLabel("Nombre de la función nueva");
+		lblNombreDeLa.setBounds(58, 79, 438, 15);
+		frame.getContentPane().add(lblNombreDeLa);
+
+		JLabel lblAccin = new JLabel("Acción 1");
+		lblAccin.setBounds(58, 140, 70, 15);
+		frame.getContentPane().add(lblAccin);
+
+		JLabel lblAccin_1 = new JLabel("Acción 2");
+		lblAccin_1.setBounds(324, 142, 70, 15);
+		frame.getContentPane().add(lblAccin_1);
+
+		JLabel lblParmetros = new JLabel("Parámetros");
+		lblParmetros.setBounds(106, 203, 107, 15);
+		frame.getContentPane().add(lblParmetros);
+
+		JLabel label = new JLabel("Parámetros");
+		label.setBounds(368, 203, 107, 15);
+		frame.getContentPane().add(label);
+		frame.getContentPane().setFocusTraversalPolicy(new FocusTraversalOnArray(
+				new Component[] { nombreFuncion, funcion1CB, funcion2CB, crearFuncionBoton }));
+
+		// A�ADIR OPCIONES COMBO BOX PEQUE�OS
+		String[] combobox = { "", "A", "B", "-A", "-B", "A<B", "A>B", "A>=B", "A<=B", "A=B" };
+		String[] combobox2 = { "", "A", "B", "-A", "-B"};
+
+		for (int i = 0; i < combobox.length; i++) {
 			variable1.addItem(combobox[i]);
 			variable2.addItem(combobox[i]);
-			variable3.addItem(combobox[i]);
-			variable4.addItem(combobox[i]);
 		}
+		for (int i = 0; i < combobox2.length; i++) {
+			variable3.addItem(combobox2[i]);
+			variable4.addItem(combobox2[i]);
+		}
+		
 
-		/*	AÑADIR OPCIONES COMBO BOX GRANDES	*/
-		actualizarComboBox();	
+		/* AÑADIR OPCIONES COMBO BOX GRANDES */
+		actualizarComboBox();
 	}
 
-	private void actualizarComboBox () {
+	private void actualizarComboBox() {
 		File f = new File("./Func");
 		String[] ficheros = f.list();
 		if (ficheros == null)
@@ -127,15 +155,16 @@ public class Ventanita {
 			funcion2CB.removeAllItems();
 			funcion1CB.addItem("");
 			funcion2CB.addItem("");
-			for (int i = 0; i < ficheros.length; i++){
-				if (ficheros[i].charAt(ficheros[i].length() - 1) == 'h'){
+			for (int i = 0; i < ficheros.length; i++) {
+				if (ficheros[i].charAt(ficheros[i].length() - 1) == 'h') {
 					funcion1CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 2));
-					funcion2CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 2));
+					if (!ficheros[i].equals("Repetir.h")) {
+						funcion2CB.addItem(ficheros[i].substring(0, ficheros[i].length() - 2));
+					}
+
 				}
 			}
 		}
 		frame.repaint();
 	}
-	
-	
 }

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Multiplicar.h"
+#include "extraño.h"
 
 
 int main(int argc, char *argv[]){
@@ -9,6 +9,6 @@ int main(int argc, char *argv[]){
 	scanf("%d", &A);
 	printf("Introducir el valor para B:");
 	scanf("%d", &B);
-	C = Multiplicar(A, B);
+	C = extraño(A, B);
 	printf("El resultado es: %d", C);
-}
+printf("\n");}

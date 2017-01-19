@@ -1,18 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Repetir.h"
 #include "Suma.h"
 
 
 
-int Multiplicar(int A, int B);
+int mult(int A, int B);
 
 
 
 
-int Multiplicar(int A, int B){
-	int aux = A;
-	int auxfin = 0;
+int mult(int A, int B){
+	int aux = A-1;
+		int auxfin = B;
 	while(repetirNumero(aux)==0){
 		aux-=1;
 		auxfin=Suma(B,auxfin);

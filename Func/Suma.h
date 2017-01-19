@@ -1,7 +1,6 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include "Suma.h"
-
+#include "Repetir.h"
 
 int Suma(A, B);
 

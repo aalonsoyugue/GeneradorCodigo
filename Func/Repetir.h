@@ -1,4 +1,4 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 
@@ -9,9 +9,6 @@ int repetirCondicion(int A,int B, char cad);
 int repetirNumero(int A){
 	if(A == 0)
 		return 1;
-	if(B == 0)
-		return 1;
-
 	return 0;
 }
 
